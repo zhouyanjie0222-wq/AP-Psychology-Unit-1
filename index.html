@@ -1,0 +1,1436 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AP 心理 Unit 1 抽查</title>
+    <meta name="description" content="AP Psychology Unit 1 Biological Bases of Behavior 抽查小网页：点击抽术语，再点显示英文+中文解释。" />
+    <style>
+      :root{
+        /* 复古苹果像素风基础色 */
+        --bg:#d8d8d8;
+        --panel:#f5f5f5;
+        --panel2:#e9e9e9;
+        --text:#111111;
+        --muted:#555555;
+        --accent:#007aff;
+        --accent2:#0051c9;
+        --danger:#d7263d;
+        --shadow:#00000055;
+      }
+      *{ box-sizing:border-box; }
+      html,body{ height:100%; }
+      body{
+        margin:0;
+        background:
+          repeating-linear-gradient(45deg, #d0d0d0 0 2px, #d8d8d8 2px 4px);
+        color:var(--text);
+        font-family: "SF Mono","Menlo","Monaco",ui-monospace,monospace;
+        letter-spacing: .2px;
+      }
+
+      .wrap{
+        min-height:100%;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        padding:24px;
+      }
+
+      .card{
+        width:min(920px, 100%);
+        background: var(--panel);
+        border-radius: 0;
+        box-shadow:
+          0 0 0 2px #000,
+          0 0 0 4px #b0b0b0,
+          8px 8px 0 0 #00000066;
+        padding: 0;
+        border: none;
+        position:relative;
+      }
+
+      /* 顶部像老苹果窗口的标题栏 */
+      .card::before{
+        content:"";
+        display:block;
+        height: 24px;
+        background: linear-gradient(180deg,#e3e3e3,#cfcfcf);
+        border-bottom: 2px solid #000;
+      }
+
+      .top{
+        display:flex;
+        gap:14px;
+        align-items:flex-start;
+        justify-content:space-between;
+        flex-wrap:wrap;
+        margin: 10px 18px 8px;
+      }
+      .title{
+        display:flex;
+        flex-direction:column;
+        gap:4px;
+        min-width: 260px;
+      }
+      .title h1{
+        margin:0;
+        font-size: 18px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: .5px;
+      }
+      .title .sub{
+        color:var(--muted);
+        font-size:12px;
+        line-height:1.4;
+      }
+      .pillrow{
+        display:flex;
+        gap:10px;
+        flex-wrap:wrap;
+        align-items:center;
+        justify-content:flex-end;
+      }
+      .pill{
+        font-size: 12px;
+        color: var(--muted);
+        background: #f0f0f0;
+        border: 2px solid #000;
+        padding: 8px 10px;
+        border-radius: 0;
+        box-shadow: 2px 2px 0 #00000055;
+      }
+      .pill b{ color: var(--text); }
+
+      .machine{
+        display:grid;
+        grid-template-columns: 1.2fr .8fr;
+        gap: 18px;
+        align-items:stretch;
+        padding: 0 18px 18px;
+      }
+      @media (max-width: 860px){
+        .machine{ grid-template-columns: 1fr; }
+      }
+
+      .screen{
+        padding: 18px;
+        background: #ffffff;
+        border-radius: 0;
+        border: 2px solid #000;
+        box-shadow: 4px 4px 0 #00000055;
+        position:relative;
+        overflow:hidden;
+      }
+      .screen:before{
+        content:"";
+        position:absolute;
+        inset:-30px;
+        background:
+          repeating-linear-gradient(180deg, #f5f5f5 0 2px, transparent 2px 4px),
+          radial-gradient(900px 420px at 20% 0%, #c7d2fe88 0%, transparent 60%);
+        opacity:.8;
+        pointer-events:none;
+        transform: rotate(-1.5deg);
+      }
+
+      .screen-inner{
+        position:relative;
+        z-index:1;
+        display:flex;
+        flex-direction:column;
+        gap:12px;
+        min-height: 280px;
+      }
+
+      .badge{
+        display:flex;
+        gap:8px;
+        flex-wrap:wrap;
+        align-items:center;
+      }
+      .tag{
+        font-size: 11px;
+        padding: 6px 8px;
+        border: 2px solid #000;
+        background: #e9e9e9;
+        color: var(--muted);
+        border-radius: 10px;
+      }
+      .tag strong{ color: var(--text); }
+
+      .term{
+        font-size: 26px;
+        font-weight: 900;
+        line-height: 1.15;
+        margin-top: 6px;
+      }
+      .term small{
+        display:block;
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 700;
+        margin-top: 8px;
+      }
+      .def{
+        white-space: pre-wrap;
+        line-height: 1.6;
+        font-size: 13px;
+        color: #1f2933;
+        border-left: 3px solid #000000;
+        padding-left: 10px;
+        background:
+          repeating-linear-gradient(135deg,#ffffff 0 3px,#f4f4f4 3px 6px);
+        border-radius: 0;
+        padding-top: 8px;
+        padding-bottom: 8px;
+      }
+      .hint{
+        margin-top:auto;
+        color: var(--muted);
+        font-size: 12px;
+        display:flex;
+        gap:10px;
+        flex-wrap:wrap;
+        align-items:center;
+      }
+      .kbd{
+        padding: 2px 6px;
+        border-radius: 0;
+        border: 1px solid #000;
+        background: #f5f5f5;
+        color: #111111;
+        font-size: 11px;
+      }
+
+      .controls{
+        padding: 18px;
+        background: #e9e9e9;
+        border-radius: 0;
+        border: 2px solid #000;
+        display:flex;
+        flex-direction:column;
+        gap: 12px;
+        box-shadow: 4px 4px 0 #00000055;
+      }
+
+      .btn{
+        border: none;
+        padding: 14px 14px;
+        border-radius: 0;
+        background: #f5f5f5;
+        color: #000;
+        font-weight: 900;
+        cursor:pointer;
+        box-shadow:
+          0 0 0 2px #000,
+          3px 3px 0 #00000055;
+        position:relative;
+        transform: translateY(0);
+      }
+      .btn:active{ transform: translateY(1px); }
+      .btn.secondary{
+        background: #f0f0f0;
+        border: 2px solid #000;
+        color: #111111;
+        box-shadow:
+          0 0 0 2px #000,
+          3px 3px 0 #00000055;
+      }
+      .btn.danger{
+        background: #ffe4e8;
+      }
+      .btn:disabled{
+        opacity:.65;
+        cursor:not-allowed;
+      }
+
+      .row{
+        display:flex;
+        gap:10px;
+        flex-wrap:wrap;
+      }
+      .row .btn{ flex: 1 1 140px; }
+
+      .stat{
+        display:grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-top: 2px;
+      }
+      .box{
+        background:#f5f5f5;
+        border: 2px solid #000;
+        border-radius: 0;
+        padding: 10px;
+      }
+      .box .k{ color: var(--muted); font-size: 11px; }
+      .box .v{ font-size: 14px; font-weight: 900; margin-top:6px; }
+
+      .footer{
+        margin-top: 14px;
+        color: var(--muted);
+        font-size: 11px;
+        line-height:1.5;
+      }
+      a{ color: var(--accent2); text-decoration:none; }
+      a:hover{ text-decoration:underline; }
+
+      .spark{
+        display:inline-block;
+        width: 10px;
+        height: 10px;
+        background: var(--accent);
+        margin-right: 8px;
+        box-shadow:
+          0 0 0 2px #ffffff,
+          0 0 0 4px #000;
+      }
+      .roll{
+        animation: roll 80ms steps(1) infinite;
+      }
+      @keyframes roll{
+        0%{ filter: blur(0px); opacity: 1; }
+        50%{ filter: blur(1px); opacity: .85; }
+        100%{ filter: blur(0px); opacity: 1; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <main class="card" role="main">
+        <div class="top">
+          <div class="title">
+            <h1><span class="spark"></span>AP 心理 Unit 1 抽查</h1>
+            <div class="sub">点击一次随机抽取术语；再点一次显示解释；继续点击进入下一题。支持键盘 <span class="kbd">Space</span>/<span class="kbd">Enter</span>。</div>
+          </div>
+          <div class="pillrow">
+            <div class="pill">题库：<b id="totalCount">-</b> 个术语</div>
+            <div class="pill">未重复池：<b id="poolCount">-</b></div>
+            <div class="pill">模式：<b id="modeLabel">抽术语</b></div>
+          </div>
+        </div>
+
+        <section class="machine" aria-label="抽查机器">
+          <div class="screen" aria-live="polite">
+            <div class="screen-inner">
+              <div class="badge">
+                <div class="tag">Unit 1 <strong>Biological Bases</strong></div>
+                <div class="tag">当前：<strong id="topicLabel">-</strong></div>
+              </div>
+
+              <div class="term" id="termText">准备好了就点击右侧按钮</div>
+              <div class="def" id="defText" style="display:none;"></div>
+
+              <div class="hint" id="hintText">
+                <span>提示：你也可以直接点屏幕抽取。</span>
+              </div>
+            </div>
+          </div>
+
+          <aside class="controls" aria-label="操作区">
+            <button class="btn" id="mainBtn">点击抽取术语</button>
+            <div class="row">
+              <button class="btn secondary" id="toggleNoRepeatBtn">未重复池：开启</button>
+              <button class="btn secondary" id="shuffleBtn">重新洗牌</button>
+            </div>
+            <div class="row">
+              <button class="btn secondary" id="peekBtn">偷看解释</button>
+              <button class="btn danger" id="resetBtn">重置计数</button>
+            </div>
+
+            <div class="stat">
+              <div class="box">
+                <div class="k">已抽题数</div>
+                <div class="v" id="drawnCount">0</div>
+              </div>
+              <div class="box">
+                <div class="k">已看解释数</div>
+                <div class="v" id="revealedCount">0</div>
+              </div>
+            </div>
+
+            <div class="footer">
+              说明：题库术语来自你提供的 `Unit1-Biological.pdf` 的 vocab 列表；解释按 AP Psych 常见定义整理，便于课堂抽查。
+            </div>
+          </aside>
+        </section>
+      </main>
+    </div>
+
+    <script>
+      /**
+       * 题库（术语来自 PDF 提取；解释为 AP Psych 常用定义/课堂口径）
+       * topic 仅用于在界面上分组提示，不影响抽取。
+       */
+      const TERMS = [
+        // 1.1
+        {
+          term: "evolutionary perspective",
+          topic: "1.1 遗传与环境",
+          defEn: "An approach that explains behavior and mental processes in terms of how they helped our ancestors survive and reproduce, using ideas such as natural selection.",
+          defZh: "进化视角：用自然选择等进化机制解释行为与心理特征如何帮助生存与繁殖，从而在群体中被保留下来。"
+        },
+        {
+          term: "natural selection",
+          topic: "1.1 遗传与环境",
+          defEn: "The principle that inherited traits that better enable survival and reproduction are more likely to be passed on to succeeding generations.",
+          defZh: "自然选择：能提高生存/繁殖成功的遗传变异更可能被传递到下一代，导致这些特征在群体中更常见。"
+        },
+        {
+          term: "eugenics",
+          topic: "1.1 遗传与环境",
+          defEn: "A movement that sought to improve the human gene pool through selective breeding and other means, often leading to unethical practices and discrimination.",
+          defZh: "优生学：试图通过“选择性繁殖”等方式‘改善’人类基因的运动；历史上与歧视、强制绝育等严重伦理问题相关。"
+        },
+        {
+          term: "twin studies",
+          topic: "1.1 遗传与环境",
+          defEn: "Research that compares identical and fraternal twins to estimate the relative influence of genes and environment on traits.",
+          defZh: "双生子研究：比较同卵/异卵双胞胎（有时含分开抚养）在特质上的相似性，用于估计遗传与环境对行为差异的影响。"
+        },
+
+        // 1.2
+        {
+          term: "central nervous system (CNS)",
+          topic: "1.2 神经系统概览",
+          defEn: "The brain and spinal cord; the body's decision-making and information-processing center.",
+          defZh: "中枢神经系统：由大脑和脊髓组成，负责信息整合、决策与指令发出。"
+        },
+        {
+          term: "peripheral nervous system (PNS)",
+          topic: "1.2 神经系统概览",
+          defEn: "All the nerves outside the brain and spinal cord that connect the CNS to the rest of the body.",
+          defZh: "周围神经系统：中枢以外的所有神经与神经节，把感觉信息送入中枢并把运动指令送到身体各部位。"
+        },
+        {
+          term: "autonomic nervous system (ANS)",
+          topic: "1.2 神经系统概览",
+          defEn: "The division of the PNS that controls glands and the muscles of internal organs, usually operating automatically.",
+          defZh: "自主神经系统：周围神经系统的一部分，自动调控内脏活动（心跳、消化、腺体分泌等），通常不受意识直接控制。"
+        },
+        {
+          term: "somatic nervous system",
+          topic: "1.2 神经系统概览",
+          defEn: "The division of the PNS that controls voluntary movements of skeletal muscles and carries sensory information.",
+          defZh: "躯体神经系统：周围神经系统的一部分，控制骨骼肌的随意运动，并传递来自皮肤、肌肉和关节的感觉信息。"
+        },
+        {
+          term: "sympathetic nervous system",
+          topic: "1.2 神经系统概览",
+          defEn: "The division of the ANS that arouses the body for action—mobilizing energy in stressful situations (fight-or-flight).",
+          defZh: "交感神经系统：自主神经系统的分支，使身体进入“战或逃”状态（心率上升、瞳孔扩大、消化抑制等）。"
+        },
+        {
+          term: "parasympathetic nervous system",
+          topic: "1.2 神经系统概览",
+          defEn: "The division of the ANS that calms the body, conserving energy and supporting rest-and-digest functions.",
+          defZh: "副交感神经系统：自主神经系统的分支，使身体恢复“休息与消化”状态（心率降低、促进消化与能量储存）。"
+        },
+
+        // 1.3
+        {
+          term: "neuron",
+          topic: "1.3 神经元与放电",
+          defEn: "A nerve cell; the basic building block of the nervous system that communicates using electrical and chemical signals.",
+          defZh: "神经元：神经系统的基本信息处理单元，通过电信号（动作电位）和化学信号（神经递质）进行通信。"
+        },
+        {
+          term: "glial cells",
+          topic: "1.3 神经元与放电",
+          defEn: "Cells in the nervous system that support, nourish, and protect neurons, and may also help with information processing.",
+          defZh: "神经胶质细胞：为神经元提供支持、营养、保护与髓鞘形成等功能，也参与免疫与信息调节。"
+        },
+        {
+          term: "reflex arc",
+          topic: "1.3 神经元与放电",
+          defEn: "A simple, automatic response pathway that bypasses most of the brain, involving sensory neuron, interneuron, and motor neuron.",
+          defZh: "反射弧：无需大脑参与或只需最少参与的快速反射通路（感觉神经元→脊髓/中间神经元→运动神经元）。"
+        },
+        {
+          term: "sensory neurons (afferent)",
+          topic: "1.3 神经元与放电",
+          defEn: "Neurons that carry incoming information from sensory receptors to the brain and spinal cord.",
+          defZh: "感觉神经元（传入）：把来自感觉受体的信息传到中枢神经系统。"
+        },
+        {
+          term: "motor neurons (efferent)",
+          topic: "1.3 神经元与放电",
+          defEn: "Neurons that carry outgoing information from the brain and spinal cord to muscles and glands.",
+          defZh: "运动神经元（传出）：把中枢发出的指令传到肌肉或腺体，引发动作/分泌。"
+        },
+        {
+          term: "interneurons",
+          topic: "1.3 神经元与放电",
+          defEn: "Neurons within the brain and spinal cord that communicate internally and process information between sensory input and motor output.",
+          defZh: "中间神经元：主要位于中枢内，连接感觉与运动神经元，负责整合与加工信息。"
+        },
+        {
+          term: "all-or-nothing principle",
+          topic: "1.3 神经元与放电",
+          defEn: "The idea that a neuron either fires a full-strength action potential or does not fire at all.",
+          defZh: "全或无定律：动作电位一旦达到阈值就会以固定幅度发生；刺激强度主要通过放电频率而不是单次幅度来编码。"
+        },
+        {
+          term: "action potential",
+          topic: "1.3 神经元与放电",
+          defEn: "A brief electrical charge that travels down an axon when the neuron fires.",
+          defZh: "动作电位：神经元膜电位快速变化的电冲动，沿轴突传播，实现长距离信号传递。"
+        },
+        {
+          term: "depolarization",
+          topic: "1.3 神经元与放电",
+          defEn: "A change in a neuron's membrane potential making the inside less negative, often triggering an action potential.",
+          defZh: "去极化：膜电位变得不那么负（更接近 0 或变正），常由 Na⁺ 内流引起，是动作电位的关键阶段。"
+        },
+        {
+          term: "refractory period",
+          topic: "1.3 神经元与放电",
+          defEn: "A brief resting pause after a neuron fires during which another action potential cannot be generated.",
+          defZh: "不应期：动作电位后短时间内神经元难以或不能再次放电，限制最高放电频率并保证信号单向传播。"
+        },
+        {
+          term: "resting potential",
+          topic: "1.3 神经元与放电",
+          defEn: "The stable, negative charge of a neuron when it is not firing, typically around -70 millivolts.",
+          defZh: "静息电位：神经元未放电时膜内相对膜外为负的电位差（约 -70mV），由离子分布与膜通透性维持。"
+        },
+        {
+          term: "reuptake",
+          topic: "1.3 神经元与放电",
+          defEn: "A process in which neurotransmitters are taken back into the sending neuron, ending their action in the synapse.",
+          defZh: "再摄取：突触间隙中的神经递质被突触前神经元重新吸收回收，用于终止信号或再利用。"
+        },
+        {
+          term: "threshold",
+          topic: "1.3 神经元与放电",
+          defEn: "The level of stimulation required to trigger a neural impulse.",
+          defZh: "阈值：引发动作电位所需的最小去极化水平；未达阈值则不会产生动作电位。"
+        },
+        {
+          term: "multiple sclerosis (MS)",
+          topic: "1.3 神经元与放电",
+          defEn: "A disease in which the immune system attacks the myelin sheath, slowing or blocking neural communication.",
+          defZh: "多发性硬化：免疫系统攻击中枢髓鞘导致脱髓鞘，神经传导受损，出现运动/感觉/认知等多种症状。"
+        },
+        {
+          term: "myasthenia gravis",
+          topic: "1.3 神经元与放电",
+          defEn: "An autoimmune disorder that reduces acetylcholine receptors at the neuromuscular junction, leading to muscle weakness.",
+          defZh: "重症肌无力：自身免疫破坏神经肌肉接头的乙酰胆碱受体，导致肌无力、易疲劳等。"
+        },
+        {
+          term: "excitatory neurotransmitter",
+          topic: "1.3 神经元与放电",
+          defEn: "A chemical messenger that makes the receiving neuron more likely to fire.",
+          defZh: "兴奋性神经递质：使突触后膜更可能达到阈值（产生 EPSP），增加放电概率。"
+        },
+        {
+          term: "inhibitory neurotransmitter",
+          topic: "1.3 神经元与放电",
+          defEn: "A chemical messenger that makes the receiving neuron less likely to fire.",
+          defZh: "抑制性神经递质：使突触后膜更不易达到阈值（产生 IPSP），降低放电概率。"
+        },
+        {
+          term: "dopamine",
+          topic: "1.3 神经元与放电",
+          defEn: "A neurotransmitter involved in movement, learning, attention, and reward; imbalances are linked to Parkinson's disease and schizophrenia.",
+          defZh: "多巴胺：与奖赏、动机、运动控制相关；过多/通路异常与精神分裂症症状有关，过少与帕金森样运动困难相关。"
+        },
+        {
+          term: "serotonin",
+          topic: "1.3 神经元与放电",
+          defEn: "A neurotransmitter that affects mood, hunger, sleep, and arousal; low levels are associated with depression.",
+          defZh: "血清素：与情绪、睡眠、食欲等相关；水平失衡与抑郁等情绪问题有关（SSRIs 通过影响再摄取起效）。"
+        },
+        {
+          term: "norepinephrine",
+          topic: "1.3 神经元与放电",
+          defEn: "A neurotransmitter and hormone involved in alertness and arousal, especially in times of stress.",
+          defZh: "去甲肾上腺素：与警觉、注意、唤醒与压力反应相关；失衡可与焦虑或情绪障碍有关。"
+        },
+        {
+          term: "glutamate",
+          topic: "1.3 神经元与放电",
+          defEn: "A major excitatory neurotransmitter involved in memory; excess glutamate can overstimulate the brain.",
+          defZh: "谷氨酸：主要的兴奋性神经递质，参与学习与记忆；过量可导致兴奋性毒性与神经损伤。"
+        },
+        {
+          term: "GABA",
+          topic: "1.3 神经元与放电",
+          defEn: "The main inhibitory neurotransmitter in the brain; low levels are linked to anxiety and seizures.",
+          defZh: "γ-氨基丁酸（GABA）：主要的抑制性神经递质；不足与焦虑、癫痫等有关（部分镇静药物增强 GABA 作用）。"
+        },
+        {
+          term: "substance P",
+          topic: "1.3 神经元与放电",
+          defEn: "A neurotransmitter involved in the transmission of pain messages in the nervous system.",
+          defZh: "P 物质：与疼痛信息传递相关的神经递质/神经肽。"
+        },
+        {
+          term: "endorphins",
+          topic: "1.3 神经元与放电",
+          defEn: "Natural opiate-like neurotransmitters linked to pain control and pleasure.",
+          defZh: "内啡肽：机体天然类阿片肽，缓解疼痛并产生愉悦感；与运动快感等现象相关。"
+        },
+        {
+          term: "acetylcholine (ACh)",
+          topic: "1.3 神经元与放电",
+          defEn: "A neurotransmitter involved in muscle action, learning, and memory; ACh-producing neurons deteriorate in Alzheimer's disease.",
+          defZh: "乙酰胆碱：与肌肉收缩、注意与学习记忆相关；阿尔茨海默病中相关通路常受损。"
+        },
+        {
+          term: "agonist",
+          topic: "1.3 神经元与放电",
+          defEn: "A molecule that increases a neurotransmitter's action by mimicking it or boosting its effects.",
+          defZh: "激动剂：模拟神经递质作用并激活受体，增强某通路效应。"
+        },
+        {
+          term: "antagonist",
+          topic: "1.3 神经元与放电",
+          defEn: "A molecule that inhibits or blocks a neurotransmitter's action.",
+          defZh: "拮抗剂：阻断受体或阻止神经递质作用，减弱某通路效应。"
+        },
+        {
+          term: "reuptake inhibitor",
+          topic: "1.3 神经元与放电",
+          defEn: "A drug that blocks the reabsorption of a neurotransmitter, increasing its availability in the synapse.",
+          defZh: "再摄取抑制剂：阻止递质被回收，使其在突触间隙停留更久、作用更强/更持久（如 SSRIs）。"
+        },
+
+        // endocrine + drugs (PDF把这些也列进 Unit1 vocab)
+        {
+          term: "endocrine system",
+          topic: "1.x 内分泌与药物",
+          defEn: "The body's chemical communication system; a set of glands that secrete hormones into the bloodstream.",
+          defZh: "内分泌系统：通过腺体分泌激素进入血液，较慢但持续地影响身体与行为（与神经系统相互作用）。"
+        },
+        {
+          term: "hormones",
+          topic: "1.x 内分泌与药物",
+          defEn: "Chemical messengers produced by endocrine glands that travel through the bloodstream and affect other tissues.",
+          defZh: "激素：由内分泌腺分泌并随血液运输的化学信使，影响生理与行为（如压力、成长、性行为等）。"
+        },
+        {
+          term: "psychoactive drugs",
+          topic: "1.x 内分泌与药物",
+          defEn: "Chemical substances that alter perceptions, mood, thinking, or behavior by acting on the nervous system.",
+          defZh: "精神活性药物：能改变知觉、情绪、意识或行为的物质，通常通过影响突触传递起作用。"
+        },
+        {
+          term: "substance use disorder",
+          topic: "1.x 内分泌与药物",
+          defEn: "A disorder characterized by continued substance use despite significant life disruption and physical risk.",
+          defZh: "物质使用障碍：持续使用物质导致显著功能受损、无法控制、耐受/戒断等问题的临床诊断。"
+        },
+        {
+          term: "depressants",
+          topic: "1.x 内分泌与药物",
+          defEn: "Drugs that reduce neural activity and slow body functions, such as alcohol or barbiturates.",
+          defZh: "抑制剂：降低中枢神经系统活动，常带来镇静/放松效果（如酒精、部分镇静催眠药）。"
+        },
+        {
+          term: "tolerance",
+          topic: "1.x 内分泌与药物",
+          defEn: "A state in which increasing doses of a drug are needed to produce the same effect.",
+          defZh: "耐受：长期使用后同剂量效果下降，需要更大剂量才能达到相同效果。"
+        },
+        {
+          term: "addiction",
+          topic: "1.x 内分泌与药物",
+          defEn: "Compulsive craving and use of a substance or behavior despite known harmful consequences.",
+          defZh: "成瘾：对物质或行为产生强迫性寻求与使用，即使带来负面后果仍难以停止，常与奖赏系统改变相关。"
+        },
+        {
+          term: "withdrawal",
+          topic: "1.x 内分泌与药物",
+          defEn: "Discomfort and distress that follow discontinuing an addictive drug or behavior.",
+          defZh: "戒断：停止或减少使用后出现的生理/心理不适反应（程度取决于物质与个体）。"
+        },
+        {
+          term: "barbiturates",
+          topic: "1.x 内分泌与药物",
+          defEn: "Depressant drugs that depress central nervous system activity, reducing anxiety but impairing memory and judgment.",
+          defZh: "巴比妥类：镇静催眠抑制剂，增强抑制性传递；过量有呼吸抑制风险，成瘾与致死性较高。"
+        },
+        {
+          term: "opioids",
+          topic: "1.x 内分泌与药物",
+          defEn: "Drugs that are chemically similar to endorphins and act as powerful pain relievers, but carry a high risk of addiction.",
+          defZh: "阿片类：与内啡肽系统相关的止痛/欣快物质（如吗啡、海洛因等），成瘾性强，过量可致呼吸抑制。"
+        },
+        {
+          term: "stimulants",
+          topic: "1.x 内分泌与药物",
+          defEn: "Drugs that excite neural activity and speed up body functions, such as caffeine, nicotine, and amphetamines.",
+          defZh: "兴奋剂：提高中枢活动与警觉（如咖啡因、尼古丁、安非他命等），常影响多巴胺/去甲肾上腺素通路。"
+        },
+        {
+          term: "hallucinogens",
+          topic: "1.x 内分泌与药物",
+          defEn: "Psychoactive drugs that distort perceptions and evoke sensory images without sensory input.",
+          defZh: "致幻剂：显著改变知觉与意识体验（如 LSD 等），可引发幻觉、时间感改变与情绪波动。"
+        },
+
+        // 1.4
+        {
+          term: "biological psychologist",
+          topic: "1.4 大脑与发现工具",
+          defEn: "A psychologist who studies the links between biological processes and psychological processes.",
+          defZh: "生物心理学家：研究大脑、神经系统、遗传与激素如何影响行为与心理过程的心理学分支/研究者。"
+        },
+        {
+          term: "biopsychosocial approach",
+          topic: "1.4 大脑与发现工具",
+          defEn: "An integrated approach that considers biological, psychological, and social-cultural factors in explaining behavior.",
+          defZh: "生物—心理—社会取向：从生物因素、个体心理因素与社会文化环境三个层面综合解释行为与心理问题。"
+        },
+        {
+          term: "neuroplasticity",
+          topic: "1.4 大脑与发现工具",
+          defEn: "The brain's ability to change by reorganizing after damage or by building new pathways based on experience.",
+          defZh: "神经可塑性：大脑/神经系统能随经验、学习或损伤而改变连接与功能的能力。"
+        },
+        {
+          term: "lesion",
+          topic: "1.4 大脑与发现工具",
+          defEn: "Tissue destruction; in the brain, a naturally or experimentally caused injury used to study function.",
+          defZh: "损伤/病灶：大脑组织受损区域；通过观察损伤与行为改变的关系推断功能定位（现代也可用可逆抑制等）。"
+        },
+        {
+          term: "EEG",
+          topic: "1.4 大脑与发现工具",
+          defEn: "A recording of the brain's electrical activity measured by electrodes placed on the scalp.",
+          defZh: "脑电图：记录头皮电活动，时间分辨率高，常用于睡眠阶段与癫痫等研究/临床。"
+        },
+        {
+          term: "fMRI",
+          topic: "1.4 大脑与发现工具",
+          defEn: "A brain imaging technique that reveals blood-flow and, therefore, brain activity by comparing successive MRI scans.",
+          defZh: "功能性磁共振：通过血氧水平变化（BOLD）间接反映脑区活动，空间分辨率高。"
+        },
+        {
+          term: "medulla",
+          topic: "1.4 大脑与发现工具",
+          defEn: "The base of the brainstem that controls heartbeat and breathing.",
+          defZh: "延髓：脑干部分，控制呼吸、心跳等基本生命维持功能。"
+        },
+        {
+          term: "reticular activating system (RAS)",
+          topic: "1.4 大脑与发现工具",
+          defEn: "A network in the brainstem that plays an important role in controlling arousal and alertness.",
+          defZh: "网状激活系统：脑干相关网络，参与觉醒与注意水平的调节。"
+        },
+        {
+          term: "thalamus",
+          topic: "1.4 大脑与发现工具",
+          defEn: "The brain's sensory control center, located on top of the brainstem, that directs messages to the cortex.",
+          defZh: "丘脑：感觉信息（嗅觉除外）进入皮层前的重要中继站，也参与注意与唤醒调控。"
+        },
+        {
+          term: "cerebellum",
+          topic: "1.4 大脑与发现工具",
+          defEn: "The 'little brain' at the rear of the brainstem, involved in balance, coordination, and nonverbal learning.",
+          defZh: "小脑：协调运动、平衡与精细动作，也与程序性学习及部分认知过程有关。"
+        },
+        {
+          term: "limbic system",
+          topic: "1.4 大脑与发现工具",
+          defEn: "A neural system located below the cerebral hemispheres; associated with emotions and drives.",
+          defZh: "边缘系统：与情绪、动机、记忆等相关的一组结构（常包括杏仁核、海马、下丘脑等）。"
+        },
+        {
+          term: "amygdala",
+          topic: "1.4 大脑与发现工具",
+          defEn: "Two lima-bean–sized neural clusters in the limbic system linked to emotion, especially fear and aggression.",
+          defZh: "杏仁核：与恐惧/威胁加工、情绪学习与情绪性记忆相关。"
+        },
+        {
+          term: "hypothalamus",
+          topic: "1.4 大脑与发现工具",
+          defEn: "A structure below the thalamus that directs maintenance activities and helps govern the endocrine system.",
+          defZh: "下丘脑：调控体内稳态（饥饿、口渴、体温等）与内分泌（垂体）及动机/奖励相关过程。"
+        },
+        {
+          term: "hippocampus",
+          topic: "1.4 大脑与发现工具",
+          defEn: "A limbic system structure that helps process explicit (conscious) memories for storage.",
+          defZh: "海马体：新近情景/陈述性记忆形成与空间导航的重要结构。"
+        },
+        {
+          term: "cerebral cortex",
+          topic: "1.4 大脑与发现工具",
+          defEn: "The intricate fabric of interconnected neural cells covering the cerebral hemispheres; the body's ultimate control and information-processing center.",
+          defZh: "大脑皮层：大脑最外层褶皱组织，负责更高级的感知、思维、语言与自控等功能。"
+        },
+        {
+          term: "frontal lobes",
+          topic: "1.4 大脑与发现工具",
+          defEn: "Portions of the cerebral cortex behind the forehead involved in speaking, muscle movements, and executive functions.",
+          defZh: "额叶：执行功能（计划、抑制、决策）、人格、语言产生（多在左侧布洛卡区附近）与随意运动控制等。"
+        },
+        {
+          term: "parietal lobes",
+          topic: "1.4 大脑与发现工具",
+          defEn: "Portions of the cerebral cortex at the top of the head and toward the rear; receive and process body sensory input.",
+          defZh: "顶叶：躯体感觉整合、空间注意与身体定位等功能。"
+        },
+        {
+          term: "occipital lobes",
+          topic: "1.4 大脑与发现工具",
+          defEn: "Portions of the cerebral cortex at the back of the head; include areas that receive information from the visual fields.",
+          defZh: "枕叶：主要负责视觉加工（初级视觉皮层）。"
+        },
+        {
+          term: "temporal lobes",
+          topic: "1.4 大脑与发现工具",
+          defEn: "Portions of the cerebral cortex roughly above the ears; include the auditory areas and language comprehension.",
+          defZh: "颞叶：听觉加工、语言理解（多在左侧韦尼克区附近）与记忆相关处理。"
+        },
+        {
+          term: "motor cortex",
+          topic: "1.4 大脑与发现工具",
+          defEn: "An area at the rear of the frontal lobes that controls voluntary movements.",
+          defZh: "运动皮层：位于额叶后部（中央前回），控制随意运动；身体不同部位在皮层上呈“运动小人”分布。"
+        },
+        {
+          term: "somatosensory cortex",
+          topic: "1.4 大脑与发现工具",
+          defEn: "An area at the front of the parietal lobes that registers and processes body touch and movement sensations.",
+          defZh: "躯体感觉皮层：位于顶叶前部（中央后回），处理来自身体触觉、痛觉、温度与本体感觉的信息。"
+        },
+        {
+          term: "association areas",
+          topic: "1.4 大脑与发现工具",
+          defEn: "Areas of the cerebral cortex that are not involved in primary motor or sensory functions but are involved in higher mental functions.",
+          defZh: "联合区：不直接负责基本感觉/运动，而进行整合与高级加工（如思维、记忆、语言、注意等）。"
+        },
+        {
+          term: "neurogenesis",
+          topic: "1.4 大脑与发现工具",
+          defEn: "The formation of new neurons, which can occur in certain brain regions even in adulthood.",
+          defZh: "神经发生：在某些脑区（如海马）产生新神经元的过程，成人也可能发生并与学习/情绪相关。"
+        },
+        {
+          term: "corpus callosum",
+          topic: "1.4 大脑与发现工具",
+          defEn: "A large band of neural fibers connecting the two brain hemispheres and carrying messages between them.",
+          defZh: "胼胝体：连接左右半球的大型神经纤维束，负责半球间信息交流。"
+        },
+        {
+          term: "contralateral organization",
+          topic: "1.4 大脑与发现工具",
+          defEn: "The principle that each hemisphere of the brain controls the opposite side of the body.",
+          defZh: "对侧支配：多数运动与躯体感觉通路为左右交叉，左半球更多控制/感受右侧身体，反之亦然。"
+        },
+        {
+          term: "split brain",
+          topic: "1.4 大脑与发现工具",
+          defEn: "A condition resulting from surgery that isolates the brain's two hemispheres by cutting the corpus callosum.",
+          defZh: "裂脑：切断胼胝体后左右半球信息难以共享，用于缓解严重癫痫；可出现双手‘各做各的’等现象。"
+        },
+
+        // 1.5 Sleep
+        {
+          term: "sleep",
+          topic: "1.5 睡眠",
+          defEn: "A periodic, natural loss of consciousness distinct from unconsciousness resulting from coma, anesthesia, or hibernation.",
+          defZh: "睡眠：周期性的意识与生理状态变化，涉及多阶段脑电与身体活动模式，对记忆、情绪与健康很重要。"
+        },
+        {
+          term: "consciousness",
+          topic: "1.5 睡眠",
+          defEn: "Our subjective awareness of ourselves and our environment.",
+          defZh: "意识：对自身与环境的觉察状态，包括清醒、睡眠、梦境与药物影响等不同水平/内容。"
+        },
+        {
+          term: "cognitive neuroscience",
+          topic: "1.5 睡眠",
+          defEn: "The interdisciplinary study of the brain activity linked with cognition.",
+          defZh: "认知神经科学：研究大脑活动如何支持认知过程（如记忆、注意、语言、决策）的学科。"
+        },
+        {
+          term: "circadian rhythm",
+          topic: "1.5 睡眠",
+          defEn: "An internal biological clock that regulates bodily rhythms on a roughly 24-hour cycle.",
+          defZh: "昼夜节律：约 24 小时的生理周期（睡眠-觉醒、体温、激素等），受光照等线索调节。"
+        },
+        {
+          term: "REM sleep",
+          topic: "1.5 睡眠",
+          defEn: "A recurring sleep stage characterized by rapid eye movement, vivid dreams, and muscle relaxation.",
+          defZh: "快速眼动睡眠：梦境更生动常见，脑活动较活跃，身体肌张力降低；与记忆整合、情绪加工有关。"
+        },
+        {
+          term: "NREM sleep",
+          topic: "1.5 睡眠",
+          defEn: "All non-rapid-eye-movement sleep stages, including N1, N2, and N3 (deep sleep).",
+          defZh: "非快速眼动睡眠：包括 N1/N2/N3 等阶段，从浅睡到深睡（慢波睡眠），身体恢复与生长激素分泌更相关。"
+        },
+        {
+          term: "alpha waves",
+          topic: "1.5 睡眠",
+          defEn: "Relatively slow brain waves of a relaxed, awake state.",
+          defZh: "α 波：清醒但放松、闭眼静息时常见的脑电波段。"
+        },
+        {
+          term: "hypnagogic sensations",
+          topic: "1.5 睡眠",
+          defEn: "Bizarre experiences, such as jerking or a feeling of falling, that occur while trying to fall asleep.",
+          defZh: "入睡幻觉/临睡感：入睡前后出现的短暂知觉体验（如坠落感、闪光、声音等）。"
+        },
+        {
+          term: "delta waves",
+          topic: "1.5 睡眠",
+          defEn: "The large, slow brain waves associated with deep sleep.",
+          defZh: "δ 波：深睡（N3）中典型的高幅慢波脑电活动。"
+        },
+        {
+          term: "insomnia",
+          topic: "1.5 睡眠",
+          defEn: "Recurring problems in falling or staying asleep.",
+          defZh: "失眠：入睡困难、维持睡眠困难或早醒并伴随白天功能受损的情况。"
+        },
+        {
+          term: "narcolepsy",
+          topic: "1.5 睡眠",
+          defEn: "A sleep disorder characterized by uncontrollable sleep attacks, sometimes directly into REM sleep.",
+          defZh: "发作性睡病：白天不可抗拒的睡眠发作，可能突然进入 REM；可伴猝倒等症状。"
+        },
+        {
+          term: "sleep apnea",
+          topic: "1.5 睡眠",
+          defEn: "A sleep disorder characterized by temporary cessations of breathing during sleep and repeated momentary awakenings.",
+          defZh: "睡眠呼吸暂停：睡眠中呼吸反复停止/变浅，导致缺氧与频繁觉醒，白天嗜睡，增加心血管风险。"
+        },
+        {
+          term: "REM sleep behavior disorder",
+          topic: "1.5 睡眠",
+          defEn: "A disorder in which a person physically acts out vivid, often unpleasant dreams during REM sleep.",
+          defZh: "REM 睡眠行为障碍：REM 期肌张力抑制不足，可能把梦境“演出来”，出现打人踢腿等动作。"
+        },
+        {
+          term: "dreams",
+          topic: "1.5 睡眠",
+          defEn: "Sequences of images, emotions, and thoughts passing through a sleeping person's mind.",
+          defZh: "梦：睡眠中发生的主观体验，REM 更常见且更生动；内容受记忆、情绪与当日经历影响。"
+        },
+        {
+          term: "REM rebound",
+          topic: "1.5 睡眠",
+          defEn: "The tendency for REM sleep to increase following REM sleep deprivation.",
+          defZh: "REM 反弹：长期剥夺 REM 后，随后睡眠中 REM 时间比例增加的现象。"
+        },
+        {
+          term: "activation-synthesis theory",
+          topic: "1.5 睡眠",
+          defEn: "The idea that dreams are the brain's attempt to make sense of random neural activity during sleep.",
+          defZh: "激活—综合理论：梦是大脑对睡眠中随机神经激活进行‘综合解释’的产物，并非必然有隐藏意义。"
+        },
+        {
+          term: "consolidation theory",
+          topic: "1.5 睡眠",
+          defEn: "The view that sleep, especially certain stages, helps strengthen and stabilize newly formed memories.",
+          defZh: "巩固理论（梦/睡眠功能）：睡眠（含梦境）有助于记忆巩固与信息整合，尤其是把新信息与旧知识联系起来。"
+        },
+
+        // 1.6 Sensation (PDF把 sensation 放进 Unit1 module)
+        {
+          term: "sensation",
+          topic: "1.6 感觉与知觉",
+          defEn: "The process by which our sensory receptors and nervous system receive and represent stimulus energies from our environment.",
+          defZh: "感觉：感觉器官把物理能量（光、声波、压力等）转换为神经信号的过程。"
+        },
+        {
+          term: "sensory receptors",
+          topic: "1.6 感觉与知觉",
+          defEn: "Specialized cells that detect stimulus information and transmit it to sensory neurons.",
+          defZh: "感觉受体：对特定刺激敏感并进行换能（transduction）的细胞/结构（如视杆、毛细胞等）。"
+        },
+        {
+          term: "perception",
+          topic: "1.6 感觉与知觉",
+          defEn: "The process of organizing and interpreting sensory information, enabling us to recognize meaningful objects and events.",
+          defZh: "知觉：大脑对感觉信息进行组织与解释，从而形成有意义的体验。"
+        },
+        {
+          term: "blindsight",
+          topic: "1.6 感觉与知觉",
+          defEn: "A condition in which a person can respond to a visual stimulus without consciously experiencing it, due to damage to visual cortex.",
+          defZh: "盲视：初级视觉皮层受损后主观说“看不见”，但仍能在某些任务中对视觉刺激做出准确反应。"
+        },
+        {
+          term: "bottom-up processing",
+          topic: "1.6 感觉与知觉",
+          defEn: "Analysis that begins with the sensory receptors and works up to the brain's integration of sensory information.",
+          defZh: "自下而上加工：从感觉输入开始，逐步组合成更复杂的知觉表征。"
+        },
+        {
+          term: "top-down processing",
+          topic: "1.6 感觉与知觉",
+          defEn: "Information processing guided by higher-level mental processes, as when we construct perceptions based on experience and expectations.",
+          defZh: "自上而下加工：由期望、经验、情境与知识影响对感觉信息的解释。"
+        },
+        {
+          term: "absolute threshold",
+          topic: "1.6 感觉与知觉",
+          defEn: "The minimum stimulation needed to detect a particular stimulus 50 percent of the time.",
+          defZh: "绝对阈限：在 50% 的试次中能刚好检测到刺激的最小刺激强度。"
+        },
+        {
+          term: "signal detection theory",
+          topic: "1.6 感觉与知觉",
+          defEn: "A theory predicting how and when we detect the presence of a faint stimulus amid background noise, considering experience and expectations.",
+          defZh: "信号检测理论：检测取决于信号强度与噪音、以及观察者的标准/期望与动机（命中、虚报等）。"
+        },
+        {
+          term: "difference threshold (JND)",
+          topic: "1.6 感觉与知觉",
+          defEn: "The minimum difference between two stimuli required for detection 50 percent of the time.",
+          defZh: "差别阈限/最小可觉差（JND）：能在 50% 的试次中觉察到两刺激差异的最小差别。"
+        },
+        {
+          term: "Weber’s law",
+          topic: "1.6 感觉与知觉",
+          defEn: "The principle that, to be perceived as different, two stimuli must differ by a constant minimum proportion.",
+          defZh: "韦伯定律：JND 与原始刺激强度成比例（ΔI/I = k），刺激越强，需要更大的绝对变化才察觉差别。"
+        },
+        {
+          term: "sensory adaptation",
+          topic: "1.6 感觉与知觉",
+          defEn: "Diminished sensitivity as a consequence of constant stimulation.",
+          defZh: "感觉适应：对持续不变刺激的敏感性降低（如进入有气味房间后逐渐闻不太到）。"
+        },
+        {
+          term: "sensory interaction",
+          topic: "1.6 感觉与知觉",
+          defEn: "The principle that one sense may influence another, as when smell affects taste.",
+          defZh: "感觉交互：不同感觉通道相互影响（如味觉与嗅觉共同塑造“风味”）。"
+        },
+
+        // vision basics
+        {
+          term: "wavelength",
+          topic: "1.6 感觉与知觉",
+          defEn: "The distance from the peak of one light or sound wave to the peak of the next; in vision, it is related to hue.",
+          defZh: "波长：光波相邻波峰间距离；与颜色（色调 hue）相关。"
+        },
+        {
+          term: "intensity",
+          topic: "1.6 感觉与知觉",
+          defEn: "The amount of energy in a light or sound wave, which we perceive as brightness or loudness.",
+          defZh: "强度：光/声的能量大小；在视觉中常与亮度相关，在听觉中与响度相关。"
+        },
+        {
+          term: "hue",
+          topic: "1.6 感觉与知觉",
+          defEn: "The dimension of color that is determined by wavelength (such as blue, green, etc.).",
+          defZh: "色调：颜色的类别体验（红/绿/蓝等），主要由波长决定。"
+        },
+        {
+          term: "ganglion cells",
+          topic: "1.6 感觉与知觉",
+          defEn: "Retinal cells whose axons form the optic nerve, some of which respond to specific visual features.",
+          defZh: "神经节细胞：视网膜输出神经元，其轴突汇聚形成视神经；部分对边缘/对比等特征敏感。"
+        },
+        {
+          term: "accommodation",
+          topic: "1.6 感觉与知觉",
+          defEn: "The process by which the eye's lens changes shape to focus near or far objects on the retina.",
+          defZh: "调节：晶状体改变形状以把不同距离物体的像聚焦在视网膜上。"
+        },
+        {
+          term: "rods",
+          topic: "1.6 感觉与知觉",
+          defEn: "Retinal receptors that detect black, white, and gray and are sensitive to low light; used in peripheral and night vision.",
+          defZh: "视杆细胞：对光敏感，负责暗光/周边视觉与黑白信息，分辨率较低。"
+        },
+        {
+          term: "cones",
+          topic: "1.6 感觉与知觉",
+          defEn: "Retinal receptors concentrated near the fovea that function in daylight and detect fine detail and color.",
+          defZh: "视锥细胞：在明亮环境工作，负责颜色与细节，集中在中央视野区域。"
+        },
+        {
+          term: "fovea",
+          topic: "1.6 感觉与知觉",
+          defEn: "The central focal point in the retina, where cones are clustered and vision is sharpest.",
+          defZh: "中央凹：视网膜中心区域，视锥密度高，视觉最清晰。"
+        },
+        {
+          term: "optic nerve",
+          topic: "1.6 感觉与知觉",
+          defEn: "The nerve that carries neural impulses from the eye to the brain.",
+          defZh: "视神经：由神经节细胞轴突组成，把视觉信息从眼睛传到大脑。"
+        },
+        {
+          term: "blind spot",
+          topic: "1.6 感觉与知觉",
+          defEn: "The point at which the optic nerve leaves the eye, where no receptor cells are located.",
+          defZh: "盲点：视神经离开视网膜处无感光细胞；大脑通常会‘补全’该区域信息。"
+        },
+        {
+          term: "nearsightedness (myopia)",
+          topic: "1.6 感觉与知觉",
+          defEn: "A condition in which nearby objects are seen more clearly than distant objects because distant images focus in front of the retina.",
+          defZh: "近视：远处物体成像落在视网膜前，远处模糊；常用凹透镜矫正。"
+        },
+        {
+          term: "farsightedness (hyperopia)",
+          topic: "1.6 感觉与知觉",
+          defEn: "A condition in which faraway objects are seen more clearly than near objects because near images focus behind the retina.",
+          defZh: "远视：近处物体成像落在视网膜后，近处模糊；常用凸透镜矫正。"
+        },
+        {
+          term: "trichromatic theory",
+          topic: "1.6 感觉与知觉",
+          defEn: "The theory that the retina has three types of color receptors—red, green, and blue—which combine to produce all colors.",
+          defZh: "三色理论：视网膜有三类对不同波长最敏感的视锥（大致红/绿/蓝），颜色体验由三者相对活动组合产生。"
+        },
+        {
+          term: "opponent-process theory",
+          topic: "1.6 感觉与知觉",
+          defEn: "The theory that opposing retinal processes (red–green, blue–yellow, black–white) enable color vision.",
+          defZh: "对立过程理论：颜色由成对的对立通道编码（红-绿、蓝-黄、黑-白），解释后像等现象。"
+        },
+        {
+          term: "dichromatism",
+          topic: "1.6 感觉与知觉",
+          defEn: "A color-vision deficiency in which one of the three basic color mechanisms is absent or not functioning.",
+          defZh: "二色视觉：缺失一类视锥或其功能异常，导致部分颜色辨别困难（某些色觉缺陷类型）。"
+        },
+        {
+          term: "monochromatism",
+          topic: "1.6 感觉与知觉",
+          defEn: "A rare color-vision deficiency in which a person has virtually no functioning cones and sees in shades of gray.",
+          defZh: "单色视觉：几乎没有功能性视锥，主要依赖视杆，色觉极差或无色觉。"
+        },
+        {
+          term: "afterimage",
+          topic: "1.6 感觉与知觉",
+          defEn: "A visual image that persists after a stimulus is removed, often in opponent colors.",
+          defZh: "后像：注视强刺激后移开仍短暂看到残留影像，常由感受器疲劳与对立通道反弹引起。"
+        },
+        {
+          term: "feature detectors",
+          topic: "1.6 感觉与知觉",
+          defEn: "Nerve cells in the brain that respond to specific features, such as edges, angles, or movement.",
+          defZh: "特征检测器：视觉皮层中对特定特征（线条方向、边缘、运动等）选择性反应的神经元。"
+        },
+        {
+          term: "parallel processing",
+          topic: "1.6 感觉与知觉",
+          defEn: "Processing many aspects of a problem simultaneously; in vision, color, motion, form, and depth are processed at the same time.",
+          defZh: "并行加工：大脑同时在不同通路处理视觉的多个属性（颜色、形状、运动、深度等）。"
+        },
+
+        // hearing + pain + taste/smell + body senses (from PDF list)
+        {
+          term: "audition",
+          topic: "1.6 感觉与知觉",
+          defEn: "The sense or act of hearing.",
+          defZh: "听觉：对声波的感觉与知觉处理。"
+        },
+        {
+          term: "frequency",
+          topic: "1.6 感觉与知觉",
+          defEn: "The number of complete wavelengths that pass a point in a given time; in hearing, associated with pitch.",
+          defZh: "频率：每秒波动次数；在听觉中与音调（pitch）相关。"
+        },
+        {
+          term: "pitch",
+          topic: "1.6 感觉与知觉",
+          defEn: "A tone's experienced highness or lowness; depends on frequency.",
+          defZh: "音调：声音高低的主观体验，主要由频率决定。"
+        },
+        {
+          term: "middle ear",
+          topic: "1.6 感觉与知觉",
+          defEn: "The chamber between the eardrum and cochlea containing three tiny bones that concentrate vibrations.",
+          defZh: "中耳：包含听小骨（锤骨、砧骨、镫骨），把鼓膜振动放大并传到内耳。"
+        },
+        {
+          term: "cochlea",
+          topic: "1.6 感觉与知觉",
+          defEn: "A coiled, fluid-filled tube in the inner ear; sound waves trigger nerve impulses here.",
+          defZh: "耳蜗：内耳的螺旋结构，内含毛细胞，把机械振动转化为神经信号。"
+        },
+        {
+          term: "inner ear",
+          topic: "1.6 感觉与知觉",
+          defEn: "The innermost part of the ear, containing the cochlea and vestibular system.",
+          defZh: "内耳：包含耳蜗与前庭系统，负责听觉换能与平衡。"
+        },
+        {
+          term: "sensorineural hearing loss",
+          topic: "1.6 感觉与知觉",
+          defEn: "Hearing loss caused by damage to the cochlea's receptor cells or to the auditory nerves.",
+          defZh: "感音神经性听力损失：内耳毛细胞或听神经受损导致（常与噪声、老化相关）。"
+        },
+        {
+          term: "conduction hearing loss",
+          topic: "1.6 感觉与知觉",
+          defEn: "Hearing loss caused by damage to the mechanical system that conducts sound waves to the cochlea.",
+          defZh: "传导性听力损失：外耳/中耳传导声波到内耳的过程受阻（如耳垢、鼓膜/听小骨问题）。"
+        },
+        {
+          term: "place theory",
+          topic: "1.6 感觉与知觉",
+          defEn: "The theory that links the pitch we hear with the place where the cochlea's membrane is stimulated.",
+          defZh: "位置理论：不同频率使耳蜗基底膜的不同位置最大振动，从而编码音调；对高频解释更好。"
+        },
+        {
+          term: "frequency theory",
+          topic: "1.6 感觉与知觉",
+          defEn: "The theory that the rate of nerve impulses traveling up the auditory nerve matches the frequency of a tone.",
+          defZh: "频率理论：听神经放电频率与声波频率匹配来编码音调；对低频解释更好（有锁相/群发放补充）。"
+        },
+        {
+          term: "gate-control theory",
+          topic: "1.6 感觉与知觉",
+          defEn: "The theory that the spinal cord contains a 'gate' that controls the transmission of pain messages to the brain.",
+          defZh: "门控理论：脊髓中的神经机制像“闸门”一样调节疼痛信号传入；注意、触摸与情绪可影响疼痛体验。"
+        },
+        {
+          term: "gustation",
+          topic: "1.6 感觉与知觉",
+          defEn: "The sense of taste.",
+          defZh: "味觉：对溶解在唾液中的化学物质的感觉与知觉。"
+        },
+        {
+          term: "olfaction",
+          topic: "1.6 感觉与知觉",
+          defEn: "The sense of smell.",
+          defZh: "嗅觉：对空气中化学分子的感觉与知觉；与记忆和情绪联系紧密。"
+        },
+        {
+          term: "umami",
+          topic: "1.6 感觉与知觉",
+          defEn: "The savory taste of protein-rich foods, now recognized as a basic taste.",
+          defZh: "鲜味：一种基本味觉，常与谷氨酸盐等有关（肉汤/蘑菇等“鲜”）。"
+        },
+        {
+          term: "oleogustus",
+          topic: "1.6 感觉与知觉",
+          defEn: "A proposed basic taste quality associated with the flavor of fatty acids or oils.",
+          defZh: "油脂味：近年提出的可能基本味觉之一，对脂肪酸/油脂相关刺激的味觉体验。"
+        },
+        {
+          term: "pheromones",
+          topic: "1.6 感觉与知觉",
+          defEn: "Chemical signals released by an individual that can affect the behavior or physiology of others of the same species.",
+          defZh: "信息素：个体释放、被同种个体接收并影响其行为/生理的化学信号；在人类中的作用证据较不一致。"
+        },
+        {
+          term: "kinesthesis",
+          topic: "1.6 感觉与知觉",
+          defEn: "The system for sensing the position and movement of individual body parts.",
+          defZh: "运动觉/本体感觉：来自肌肉、腱与关节的反馈，让我们知道身体各部位的位置与运动。"
+        },
+        {
+          term: "vestibular sense",
+          topic: "1.6 感觉与知觉",
+          defEn: "The sense of body movement and position, including the sense of balance, based in the inner ear.",
+          defZh: "前庭觉：内耳前庭系统提供的平衡与头部运动信息，帮助保持姿势与空间定向。"
+        },
+        {
+          term: "phantom limb syndrome",
+          topic: "1.6 感觉与知觉",
+          defEn: "The sensation that a missing limb is still present, often accompanied by pain, after amputation.",
+          defZh: "幻肢综合征：截肢后仍感觉到“失去的肢体”存在甚至疼痛，常与神经系统重组与疼痛通路有关。"
+        },
+      ];
+
+      // ---------- App logic ----------
+      const el = (id) => document.getElementById(id);
+      const termText = el("termText");
+      const defText = el("defText");
+      const hintText = el("hintText");
+      const topicLabel = el("topicLabel");
+      const mainBtn = el("mainBtn");
+      const toggleNoRepeatBtn = el("toggleNoRepeatBtn");
+      const shuffleBtn = el("shuffleBtn");
+      const peekBtn = el("peekBtn");
+      const resetBtn = el("resetBtn");
+      const totalCount = el("totalCount");
+      const poolCount = el("poolCount");
+      const modeLabel = el("modeLabel");
+      const drawnCount = el("drawnCount");
+      const revealedCount = el("revealedCount");
+
+      totalCount.textContent = String(TERMS.length);
+
+      let noRepeat = true;
+      let pool = [];
+      let current = null;
+      let phase = "draw"; // draw -> reveal -> next(draw)
+      let drawn = 0;
+      let revealed = 0;
+      let rolling = false;
+
+      function shuffled(arr){
+        const a = arr.slice();
+        for (let i = a.length - 1; i > 0; i--){
+          const j = Math.floor(Math.random() * (i + 1));
+          [a[i], a[j]] = [a[j], a[i]];
+        }
+        return a;
+      }
+
+      function resetPool(){
+        pool = shuffled(TERMS);
+        poolCount.textContent = String(pool.length);
+      }
+
+      function setModeLabel(){
+        modeLabel.textContent = phase === "draw" ? "抽术语" : (phase === "reveal" ? "看解释" : "下一题");
+        mainBtn.textContent =
+          phase === "draw" ? "点击抽取术语" :
+          phase === "reveal" ? "再次点击显示解释" :
+          "点击进入下一题";
+      }
+
+      function setScreen({term, topic, item, showDef}){
+        termText.textContent = term || "准备好了就点击右侧按钮";
+        topicLabel.textContent = topic || "-";
+        if (showDef){
+          defText.style.display = "block";
+          if (item && (item.defEn || item.defZh)) {
+            const en = item.defEn ? `EN: ${item.defEn}` : "";
+            const zh = item.defZh ? `ZH: ${item.defZh}` : "";
+            defText.textContent = [en, zh].filter(Boolean).join("\n\n");
+          } else {
+            defText.textContent = "";
+          }
+          hintText.innerHTML = `<span>再点一次进入下一题。</span> <span class="kbd">Space</span>/<span class="kbd">Enter</span>`;
+        } else {
+          defText.style.display = "none";
+          defText.textContent = "";
+          hintText.innerHTML = `<span>提示：再点一次就会显示解释。</span> <span class="kbd">Space</span>/<span class="kbd">Enter</span>`;
+        }
+      }
+
+      function pickOne(){
+        if (!noRepeat){
+          return TERMS[Math.floor(Math.random() * TERMS.length)];
+        }
+        if (pool.length === 0) resetPool();
+        const item = pool.pop();
+        poolCount.textContent = String(pool.length);
+        return item;
+      }
+
+      async function rollAndStop(){
+        rolling = true;
+        mainBtn.disabled = true;
+        peekBtn.disabled = true;
+        shuffleBtn.disabled = true;
+        toggleNoRepeatBtn.disabled = true;
+        resetBtn.disabled = true;
+
+        termText.classList.add("roll");
+        defText.style.display = "none";
+
+        const start = Date.now();
+        const duration = 900;
+        while (Date.now() - start < duration){
+          const tmp = TERMS[Math.floor(Math.random() * TERMS.length)];
+          setScreen({ term: tmp.term, topic: tmp.topic, item: null, showDef: false });
+          await new Promise(r => setTimeout(r, 60));
+        }
+
+        current = pickOne();
+        drawn += 1;
+        drawnCount.textContent = String(drawn);
+        setScreen({ term: current.term, topic: current.topic, item: current, showDef: false });
+        phase = "reveal";
+        setModeLabel();
+
+        termText.classList.remove("roll");
+        mainBtn.disabled = false;
+        peekBtn.disabled = false;
+        shuffleBtn.disabled = false;
+        toggleNoRepeatBtn.disabled = false;
+        resetBtn.disabled = false;
+        rolling = false;
+      }
+
+      async function onMain(){
+        if (rolling) return;
+        if (phase === "draw"){
+          await rollAndStop();
+          return;
+        }
+        if (phase === "reveal"){
+          if (!current) return;
+          setScreen({ term: current.term, topic: current.topic, item: current, showDef: true });
+          revealed += 1;
+          revealedCount.textContent = String(revealed);
+          phase = "next";
+          setModeLabel();
+          return;
+        }
+        // next
+        current = null;
+        phase = "draw";
+        setModeLabel();
+        setScreen({ term: "准备好了就点击右侧按钮", topic: "-", item: null, showDef: false });
+      }
+
+      function onPeek(){
+        if (rolling) return;
+        if (phase === "reveal" && current){
+          setScreen({ term: current.term, topic: current.topic, item: current, showDef: true });
+        }
+      }
+
+      function onShuffle(){
+        resetPool();
+        // 不改变当前题目，只重排未重复池
+      }
+
+      function onToggleNoRepeat(){
+        noRepeat = !noRepeat;
+        toggleNoRepeatBtn.textContent = `未重复池：${noRepeat ? "开启" : "关闭"}`;
+        if (noRepeat) resetPool();
+        poolCount.textContent = noRepeat ? String(pool.length) : "∞";
+      }
+
+      function onReset(){
+        drawn = 0;
+        revealed = 0;
+        drawnCount.textContent = "0";
+        revealedCount.textContent = "0";
+        current = null;
+        phase = "draw";
+        setModeLabel();
+        setScreen({ term: "准备好了就点击右侧按钮", topic: "-", item: null, showDef: false });
+        if (noRepeat) resetPool();
+        poolCount.textContent = noRepeat ? String(pool.length) : "∞";
+      }
+
+      // init
+      resetPool();
+      poolCount.textContent = noRepeat ? String(pool.length) : "∞";
+      toggleNoRepeatBtn.textContent = "未重复池：开启";
+      setModeLabel();
+      topicLabel.textContent = "-";
+
+      mainBtn.addEventListener("click", onMain);
+      document.querySelector(".screen").addEventListener("click", onMain);
+      peekBtn.addEventListener("click", onPeek);
+      shuffleBtn.addEventListener("click", onShuffle);
+      toggleNoRepeatBtn.addEventListener("click", onToggleNoRepeat);
+      resetBtn.addEventListener("click", onReset);
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === " " || e.key === "Enter"){
+          e.preventDefault();
+          onMain();
+        }
+      });
+    </script>
+  </body>
+</html>
+
